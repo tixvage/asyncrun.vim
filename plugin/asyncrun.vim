@@ -1520,9 +1520,6 @@ endfunc
 " exit callback
 "----------------------------------------------------------------------
 function! s:terminal_exit(...)
-	let l:temp_buf = term_getbufnr(a:1)
-	call bufload(l:temp_buf)
-	call appendbufline(l:temp_buf, '$', ['HEY'])
 	if has('nvim') == 0
 		let pid = job_info(a:1)['process']
 	else
