@@ -1318,6 +1318,7 @@ function! s:terminal_init(opts)
 	let cwd = get(a:opts, 'cwd', '')
 	let cwd = (cwd != '' && isdirectory(cwd))? cwd : ''
 	let bid = -1
+	let command_temp = command
 	if get(a:opts, 'safe', get(g:, 'asyncrun_term_safe', 0)) != 0
 		let command = s:ScriptWrite(command, 0)
 		if stridx(command, ' ') >= 0
@@ -1347,7 +1348,7 @@ function! s:terminal_init(opts)
 		if pos != 'hide'
 			let opts = {'curwin':1, 'norestore':1, 'term_finish':'open'}
 			let opts.term_kill = 'term'
-			let opts.term_name = 'Running ' . command
+			let opts.term_name = 'Running ' . command_temp
 			let opts.exit_cb = function('s:terminal_exit')
 			let close = get(a:opts, 'close', 0)
 			if close
