@@ -1348,7 +1348,7 @@ function! s:terminal_init(opts)
 		if pos != 'hide'
 			let opts = {'curwin':1, 'norestore':1, 'term_finish':'open'}
 			let opts.term_kill = 'term'
-			let opts.term_name = 'Running ' . command_temp
+			let opts.term_name = 'Running: ' . command_temp
 			let opts.exit_cb = function('s:terminal_exit')
 			let close = get(a:opts, 'close', 0)
 			if close
@@ -1520,6 +1520,9 @@ endfunc
 " exit callback
 "----------------------------------------------------------------------
 function! s:terminal_exit(...)
+	let l:temp_buf = term_getbufnr(a:1)
+	call bufload(l:buf)
+	call appendbufline(l:buf, '$', ['HEY'])
 	if has('nvim') == 0
 		let pid = job_info(a:1)['process']
 	else
