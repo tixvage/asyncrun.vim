@@ -1347,6 +1347,7 @@ function! s:terminal_init(opts)
 		if pos != 'hide'
 			let opts = {'curwin':1, 'norestore':1, 'term_finish':'open'}
 			let opts.term_kill = 'term'
+			let opts.term_name = 'YOR MOM'
 			let opts.exit_cb = function('s:terminal_exit')
 			let close = get(a:opts, 'close', 0)
 			if close
@@ -1357,10 +1358,8 @@ function! s:terminal_init(opts)
 					let opts.cwd = cwd
 				endif
 			endif
-			if has('patch-8.1.1630')
-				let opts.term_name = s:term_gen_name(1, a:opts, -1)
-			endif
 			try
+			  	let l:start_time = reltime()
 				let bid = term_start(command, opts)
 			catch /^.*/
 				call s:ErrorMsg('E37: No write since last change')
